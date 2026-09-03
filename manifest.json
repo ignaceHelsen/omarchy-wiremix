@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "ignace.wiremix",
+  "name": "Microphone input",
+  "version": "1.1.0",
+  "author": "Ignace Helsen",
+  "description": "Pick the microphone port (internal / headset / jack); opens wiremix for full mixing",
+  "homepage": "https://github.com/ignacehelsen/omarchy-mic-input",
+  "repository": "https://github.com/ignacehelsen/omarchy-mic-input",
+  "license": "MIT",
+  "keywords": [
+    "microphone",
+    "audio",
+    "pipewire",
+    "pulseaudio",
+    "wiremix"
+  ],
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "MicPanel.qml"
+  },
+  "barWidget": {
+    "displayName": "Microphone input",
+    "description": "Pick the microphone port (internal / headset / jack); opens wiremix for full mixing",
+    "category": "Audio",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

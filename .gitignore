@@ -1,0 +1,11 @@
+# Stale editor and rescue copies. A .bak of a panel is a second, older copy of
+# the plugin sitting in the tree, and the shell can be told to load it.
+*.bak
+*.bak.*
+*.orig
+*.rej
+*~
+
+*.local.*
+__pycache__/
+*.pyc

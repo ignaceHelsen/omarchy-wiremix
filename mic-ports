@@ -1,0 +1,33 @@
+#!/bin/bash
+# Lists or switches the microphone PORTS of the default PipeWire source.
+# Quickshell's Pipewire service only exposes source *nodes*; the internal /
+# headset / jack mic choice lives in the ports of a single node, so this
+# reaches past it with pactl.
+set -uo pipefail
+
+case "${1:-list}" in
+  list)
+    pactl -f json list sources 2>/dev/null | python3 -c '
+import json, sys, subprocess
+try:
+    default = subprocess.run(["pactl", "get-default-source"], capture_output=True, text=True).stdout.strip()
+    for s in json.load(sys.stdin):
+        if s.get("name") != default:
+            continue
+        active = s.get("active_port") or ""
+        for p in (s.get("ports") or []):
+            name = p.get("name", "")
+            if p.get("type") not in ("Mic", "Headset"):
+                continue
+            if str(p.get("availability", "")).lower() == "not available":
+                continue
+            print("\t".join([name, p.get("description", name), "1" if name == active else "0"]))
+except Exception:
+    pass
+'
+    ;;
+  set)
+    [[ -n ${2:-} ]] || exit 1
+    pactl set-source-port "$(pactl get-default-source)" "$2"
+    ;;
+esac
